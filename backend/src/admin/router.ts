@@ -33,6 +33,7 @@ router.get('/self-hosting', async (_, res) => {
       slack: !!config.SLACK_KEY && !!config.SLACK_SECRET,
       twitter: !!config.TWITTER_KEY && !!config.TWITTER_SECRET,
       okta: !!config.OKTA_AUDIENCE && !!config.OKTA_KEY && !!config.OKTA_SECRET,
+      keycloak: !!config.KEYCLOAK_REALM && !!config.KEYCLOAK_URL && !!config.KEYCLOAK_CLIENT_ID && !!config.KEYCLOAK_CLIENT_SECRET,
     },
   };
   res.status(200).send(payload);

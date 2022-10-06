@@ -157,6 +157,7 @@ export type AccountType =
   | 'slack'
   | 'microsoft'
   | 'okta'
+  | 'keycloak'
   | 'password';
 
 export interface Vote extends Entity {

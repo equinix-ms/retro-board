@@ -34,6 +34,10 @@ export interface BackendConfig {
   OKTA_AUDIENCE: string;
   OKTA_KEY: string;
   OKTA_SECRET: string;
+  KEYCLOAK_REALM: string;
+  KEYCLOAK_URL: string;
+  KEYCLOAK_CLIENT_ID: string;
+  KEYCLOAK_CLIENT_SECRET: string;
   SENDGRID_API_KEY: string;
   SENDGRID_SENDER: string;
   STRIPE_SECRET: string;

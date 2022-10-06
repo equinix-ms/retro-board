@@ -57,6 +57,10 @@ services:
       OKTA_AUDIENCE:
       OKTA_KEY:
       OKTA_SECRET:
+      KEYCLOAK_REALM:
+      KEYCLOAK_URL:
+      KEYCLOAK_CLIENT_ID:
+      KEYCLOAK_CLIENT_SECRET:
 
       # -- Do not change --
       NODE_ENV: production

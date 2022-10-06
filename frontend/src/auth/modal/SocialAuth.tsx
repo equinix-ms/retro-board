@@ -14,6 +14,7 @@ import { FullUser } from 'common';
 import Wrapper from './Wrapper';
 import SlackLoginButton from './social/SlackLoginButton';
 import OktaLoginButton from './social/OktaLoginButton';
+import KeycloakLoginButton from './social/KeycloakLoginButton';
 import useOAuthAvailabilities from '../../global/useOAuthAvailabilities';
 import { useTranslation } from 'react-i18next';
 
@@ -60,6 +61,7 @@ function SocialAuth({ onClose, onUser }: SocialAuthProps) {
     () => handleOAuth('twitter'),
     [handleOAuth]
   );
+  const handleKeycloak = useCallback(() => handleOAuth('keycloak'), [handleOAuth]);
 
   useEffect(() => {
     const s = io();
@@ -105,6 +107,9 @@ function SocialAuth({ onClose, onUser }: SocialAuthProps) {
           <TwitterLoginButton onClick={handleTwitter} text="Twitter" />
         )}
         {details.okta && <OktaLoginButton onClick={handleOkta} text="Okta" />}
+        {details.keycloak && (
+          <KeycloakLoginButton onClick={handleKeycloak} text="Keycloak" />
+        )}
       </AccountsButtons>
     </Wrapper>
   );

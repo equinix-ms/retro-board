@@ -12,6 +12,7 @@ const githubAuth = passport.authenticate('github', { scope: ['user:email'] });
 const slackAuth = passport.authenticate('Slack');
 const microsoftAuth = passport.authenticate('microsoft');
 const oktaAuth = passport.authenticate('okta');
+const keycloakAuth = passport.authenticate('keycloak');
 
 function anonAuth(req: Request, res: Response, next: NextFunction) {
   passport.authenticate('local', function (err, user) {
@@ -58,6 +59,7 @@ router.get('/github/callback', githubAuth, endOAuthHandler);
 router.get('/slack/callback', slackAuth, endOAuthHandler);
 router.get('/microsoft/callback', microsoftAuth, endOAuthHandler);
 router.get('/okta/callback', oktaAuth, endOAuthHandler);
+router.get('/keycloak/callback', keycloakAuth, endOAuthHandler);
 router.post('/anonymous/login', anonAuth, endAnonHandler);
 router.post('/login', anonAuth, endAnonHandler);
 
@@ -80,5 +82,6 @@ router.get('/github', githubAuth);
 router.get('/slack', slackAuth);
 router.get('/microsoft', microsoftAuth);
 router.get('/okta', oktaAuth);
+router.get('/keycloak', keycloakAuth);
 
 export default router;

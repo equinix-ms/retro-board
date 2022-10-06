@@ -6,6 +6,7 @@ import { Strategy as GithubStrategy } from 'passport-github2';
 import { Strategy as SlackStrategy } from 'passport-slack-oauth2';
 import { Strategy as MicrosoftStrategy } from 'passport-microsoft';
 import { Strategy as OktaStrategy } from 'passport-okta-oauth20';
+import { Strategy as KeycloakStrategy } from 'passport-keycloak-oauth2-oidc';
 
 import {
   TWITTER_CONFIG,
@@ -14,6 +15,7 @@ import {
   MICROSOFT_CONFIG,
   SLACK_CONFIG,
   OKTA_CONFIG,
+  KEYCLOAK_CONFIG
 } from './config';
 import { AccountType } from '../common';
 import chalk from 'chalk';
@@ -27,6 +29,7 @@ import {
   MicrosoftProfile,
   SlackProfile,
   OktaProfile,
+  KeycloakProfile,
 } from './types';
 import { registerUser, UserRegistration } from '../db/actions/users';
 import { serialiseIds, UserIds, deserialiseIds } from '../utils';
@@ -70,6 +73,8 @@ export default () => {
         case 'okta':
           user = buildFromOktaProfile(profile as OktaProfile);
           break;
+        case 'keycloak':
+          user = buildFromKeycloakProfile(profile as KeycloakProfile);
         default:
           throw new Error('Unknown provider: ' + type);
       }
@@ -184,6 +189,19 @@ export default () => {
     };
   }
 
+  function buildFromKeycloakProfile(
+    profile: KeycloakProfile
+  ): UserRegistration | null {
+    const email = profile.email;
+
+    return {
+      name: profile.fullName,
+      type: 'keycloak',
+      username: email,
+      email,
+    }
+  }
+
   function logSuccess(provider: string) {
     console.log(chalk`{blue 🔑  {red ${provider}} authentication activated}`);
   }
@@ -219,6 +237,11 @@ export default () => {
   if (OKTA_CONFIG) {
     passport.use(new OktaStrategy(OKTA_CONFIG, callback('okta')));
     logSuccess('Okta');
+  }
+
+  if (KEYCLOAK_CONFIG) {
+    passport.use(new KeycloakStrategy(KEYCLOAK_CONFIG, callback('keycloak')));
+    logSuccess('Keycloak');
   }
 
   passport.use(

@@ -3,9 +3,10 @@ import { StrategyOptions as GoogleStrategyOptions } from 'passport-google-oauth2
 import { StrategyOptions as GitHubStrategy } from 'passport-github2';
 import { MicrosoftStrategyOptions } from 'passport-microsoft';
 import { OktaStrategyOptions } from 'passport-okta-oauth20';
+import { StrategyOptions as KeycloakStrategyOptions } from 'passport-keycloak-oauth2-oidc';
 import config from '../config';
 
-const providers = ['twitter', 'google', 'github', 'slack', 'microsoft', 'okta'];
+const providers = ['twitter', 'google', 'github', 'slack', 'microsoft', 'okta', 'keycloak'];
 
 const CLIENT_ORIGIN = config.BASE_URL || 'http://localhost:3000';
 
@@ -13,7 +14,7 @@ const callbacks = providers.map((provider) => {
   return `${CLIENT_ORIGIN}/api/auth/${provider}/callback`;
 });
 
-const [twitterURL, googleURL, githubURL, slackURL, microsoftURL, oktaURL] =
+const [twitterURL, googleURL, githubURL, slackURL, microsoftURL, oktaURL, keycloakURL] =
   callbacks;
 
 export const TWITTER_CONFIG: IStrategyOption | null =
@@ -79,5 +80,18 @@ export const OKTA_CONFIG: OktaStrategyOptions | null =
         clientSecret: config.OKTA_SECRET,
         scope: ['openid', 'email', 'profile'],
         callbackURL: oktaURL,
+      }
+    : null;
+
+export const KEYCLOAK_CONFIG: KeycloakStrategyOptions | null =
+  config.KEYCLOAK_REALM && config.KEYCLOAK_URL && config.KEYCLOAK_CLIENT_ID && config.KEYCLOAK_CLIENT_SECRET
+    ? {
+        realm: config.KEYCLOAK_REALM,
+        authServerURL: config.KEYCLOAK_URL,
+        clientID: config.KEYCLOAK_CLIENT_ID,
+        clientSecret: config.KEYCLOAK_CLIENT_SECRET,
+        publicClient: 'false',
+        sslRequired: 'external',
+        callbackURL: keycloakURL,
       }
     : null;

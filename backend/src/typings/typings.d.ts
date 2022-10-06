@@ -17,3 +17,4 @@ declare namespace Express {
 
 declare module 'freemail';
 declare module 'passport-slack-oauth2';
+declare module 'passport-keycloak-oauth2-oidc';

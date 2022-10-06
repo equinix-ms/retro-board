@@ -1,4 +1,5 @@
 import { OktaProfile as BaseOktaProfile } from 'passport-okta-oauth20';
+import { KeycloakProfile as BaseKeycloakProfile } from 'passport-keycloak-oauth2-oidc';
 
 export interface BaseProfile {
   id: string;
@@ -8,7 +9,8 @@ export interface BaseProfile {
     | 'twitter'
     | 'Slack'
     | 'microsoft'
-    | 'okta-social';
+    | 'okta-social'
+    | 'keycloak'
 }
 
 interface GoogleProfileEmail {
@@ -183,3 +185,4 @@ export interface MicrosoftProfile extends BaseProfile {
 }
 
 export interface OktaProfile extends BaseOktaProfile, BaseProfile {}
+export interface KeycloakProfile extends BaseKeycloakProfile, BaseProfile {}

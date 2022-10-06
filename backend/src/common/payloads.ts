@@ -70,6 +70,7 @@ export interface OAuthAvailabilities {
   microsoft: boolean;
   github: boolean;
   okta: boolean;
+  keycloak: boolean;
 }
 
 export interface DeleteAccountPayload {
